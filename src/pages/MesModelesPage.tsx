@@ -10,7 +10,7 @@ export const MesModelesPage: React.FC = () => {
     { id: 2, image: "https://i.ibb.co/sdRbRhKG/333a6aa8c2de55250117f7dbdb31d6fe.jpg" },
     { id: 3, image: "https://i.ibb.co/ksH24R9x/bba8ae29aee80af0b4b0b06203b1eb8f.jpg" },
     { id: 4, image: "https://i.ibb.co/nsjLcz0t/b76553b27f295f7c1d3f43fcc0ab4a3b.jpg" },
-    { id: 5, image: "https://via.placeholder.com/200x250?text=Chemise+1" },
+    { id: 5, image: "https://i.ibb.co/wFPptwQn/9a78c01f1030ab9508126a2bd812fa71.jpg" },
     { id: 6, image: "https://via.placeholder.com/200x250?text=Robe+3" },
   ];
 
