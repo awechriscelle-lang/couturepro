@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users, ShoppingBag, Euro, AlertTriangle, Plus, CreditCard, LogOut, Settings } from 'lucide-react';
+import { Users, ShoppingBag, Euro, AlertTriangle, Plus, CreditCard } from 'lucide-react';
 import { Header } from '../components/Header';
 import { BottomNavigation } from '../components/BottomNavigation';
 import { DashboardCard } from '../components/DashboardCard';
@@ -30,7 +30,7 @@ export const DashboardPage: React.FC = () => {
         c.statut === 'En cours' || c.statut === 'En attente'
       ).length;
 
-      // Calculate current month revenue
+      // Revenus du mois en cours
       const currentMonth = new Date().getMonth();
       const currentYear = new Date().getFullYear();
       const revenusMois = commandes
@@ -52,33 +52,35 @@ export const DashboardPage: React.FC = () => {
     }
   };
 
+  // ✅ 4 grosses cartes CTA (CDC)
   const dashboardCards = [
-    {
-      title: "Accéder à mon espace",
-      icon: LogOut,
-      bgColor: "bg-teal-500",
-      onClick: () => navigate('/clients')
-    },
-    {
-      title: "Vérifier un document",
-      icon: Settings,
-      bgColor: "bg-red-500",
-      onClick: () => navigate('/commandes')
-    },
     {
       title: "Clients",
       icon: Users,
-      bgColor: "bg-green-600",
+      bgColor: "bg-[#1B7F4D]",
       onClick: () => navigate('/clients')
     },
     {
-      title: "Services et coût",
+      title: "Commandes",
+      icon: ShoppingBag,
+      bgColor: "bg-[#3EBE72]",
+      onClick: () => navigate('/commandes')
+    },
+    {
+      title: "Alertes & Notifications",
+      icon: AlertTriangle,
+      bgColor: "bg-red-500",
+      onClick: () => navigate('/alertes')
+    },
+    {
+      title: "Services & coûts",
       icon: Euro,
-      bgColor: "bg-yellow-500",
-      onClick: () => navigate('/profil')
+      bgColor: "bg-[#0C3A24]",
+      onClick: () => navigate('/services')
     }
   ];
 
+  // ✅ Actions rapides (ajout client, commande, paiement)
   const quickActions = [
     {
       title: "Ajouter client",
@@ -102,31 +104,31 @@ export const DashboardPage: React.FC = () => {
       <Header title="COUTUPRO" showMenu />
 
       <div className="p-4 space-y-6">
-        {/* Welcome Message */}
-        <div className="bg-gradient-to-r from-[#5082BE] to-[#1B7F4D] text-white p-4 rounded-xl">
-          <h2 className="text-lg font-semibold mb-1">Bonjour ! 👋</h2>
+        {/* Message de bienvenue */}
+        <div className="bg-gradient-to-r from-[#1B7F4D] to-[#3EBE72] text-white p-4 rounded-xl shadow-md">
+          <h2 className="text-lg font-semibold mb-1">Bonjour 👋</h2>
           <p className="text-sm opacity-90">Gérez votre atelier de couture facilement</p>
         </div>
 
-        {/* Stats Cards */}
+        {/* Statistiques principales */}
         <div className="grid grid-cols-2 gap-4">
           <StatCard
             title="Clients"
             value={stats.totalClients}
             icon={Users}
-            color="bg-blue-500"
+            color="bg-[#1B7F4D]"
           />
           <StatCard
             title="Commandes"
             value={stats.commandesEnCours}
             icon={ShoppingBag}
-            color="bg-green-500"
+            color="bg-[#3EBE72]"
           />
           <StatCard
             title="Revenus (mois)"
             value={`${stats.revenusMois.toLocaleString()}€`}
             icon={Euro}
-            color="bg-purple-500"
+            color="bg-[#0C3A24]"
           />
           <StatCard
             title="Alertes"
@@ -136,7 +138,7 @@ export const DashboardPage: React.FC = () => {
           />
         </div>
 
-        {/* Main Actions - 4 CTA Cards */}
+        {/* 4 CTA */}
         <div>
           <h3 className="text-lg font-semibold mb-4">Choisissez votre opération</h3>
           <div className="grid grid-cols-2 gap-4">
@@ -152,7 +154,7 @@ export const DashboardPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Quick Actions */}
+        {/* Actions rapides */}
         <div>
           <h3 className="text-lg font-semibold mb-4">Actions rapides</h3>
           <div className="flex space-x-3 overflow-x-auto pb-2">
@@ -162,7 +164,7 @@ export const DashboardPage: React.FC = () => {
                 onClick={action.onClick}
                 className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex flex-col items-center space-y-2 min-w-[100px] hover:shadow-md transition-shadow"
               >
-                <action.icon className="w-6 h-6 text-[#5082BE]" />
+                <action.icon className="w-6 h-6 text-[#1B7F4D]" />
                 <span className="text-sm font-medium text-gray-700 text-center">{action.title}</span>
               </button>
             ))}
