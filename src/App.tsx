@@ -9,6 +9,7 @@ import { ClientDetailPage } from './pages/ClientDetailPage';
 import { AlertsPage } from './pages/AlertsPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { LoadingSpinner } from './components/LoadingSpinner';
+import { MesModelesPage } from "./pages/MesModelesPage";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -52,6 +53,7 @@ const App: React.FC = () => {
               <Route path="/alertes" element={<AlertsPage />} />
               <Route path="/profil" element={<ProfilePage />} />
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/mes-modeles" element={<MesModelesPage />} />
             </>
           ) : (
             <Route path="*" element={<Navigate to="/auth" replace />} />
