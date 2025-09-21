@@ -6,7 +6,7 @@ import { BottomNavigation } from "../components/BottomNavigation";
 export const MesModelesPage: React.FC = () => {
   // Exemple d'images (tu pourras les remplacer par tes modèles)
   const modeles = [
-    { id: 1, image: "https://via.placeholder.com/200x250?text=Robe+1" },
+    { id: 1, image: "https://i.ibb.co/B5VKQqLm/234ba09e63254ef46b27e1ad8a536d92.jpg" },
     { id: 2, image: "https://via.placeholder.com/200x250?text=Robe+2" },
     { id: 3, image: "https://via.placeholder.com/200x250?text=Costume+1" },
     { id: 4, image: "https://via.placeholder.com/200x250?text=Pagne+1" },
