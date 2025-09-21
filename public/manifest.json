@@ -1,0 +1,27 @@
+{
+  "name": "COUTUPRO - Gestion Couture",
+  "short_name": "COUTUPRO",
+  "description": "Application de gestion d'atelier de couture professionnel",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#5082BE",
+  "theme_color": "#5082BE",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["productivity", "business"],
+  "lang": "fr-FR",
+  "dir": "ltr"
+}
