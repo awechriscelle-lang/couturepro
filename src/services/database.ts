@@ -142,6 +142,10 @@ export const dbService = {
     await db.commandes.update(id, updates);
   },
 
+  async getCommande(id: string): Promise<Commande | undefined> {
+    return await db.commandes.get(id);
+  },
+
   // Paiements
   async createPaiement(paiement: Omit<Paiement, 'id'>): Promise<Paiement> {
     const newPaiement: Paiement = {

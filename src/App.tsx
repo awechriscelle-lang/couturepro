@@ -8,6 +8,11 @@ import { NewClientPage } from './pages/NewClientPage';
 import { ClientDetailPage } from './pages/ClientDetailPage';
 import { AlertsPage } from './pages/AlertsPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { CommandesPage } from './pages/CommandesPage';
+import { NewCommandePage } from './pages/NewCommandePage';
+import { CommandeDetailPage } from './pages/CommandeDetailPage';
+import { NewMesuresPage } from './pages/NewMesuresPage';
+import { MesuresDetailPage } from './pages/MesuresDetailPage';
 import { LoadingSpinner } from './components/LoadingSpinner';
 import { MesModelesPage } from "./pages/MesModelesPage";
 
@@ -50,6 +55,11 @@ const App: React.FC = () => {
               <Route path="/clients" element={<ClientsPage />} />
               <Route path="/clients/new" element={<NewClientPage />} />
               <Route path="/clients/:clientId" element={<ClientDetailPage />} />
+              <Route path="/clients/:clientId/mesures/new" element={<NewMesuresPage />} />
+              <Route path="/clients/:clientId/mesures/:mesuresId" element={<MesuresDetailPage />} />
+              <Route path="/commandes" element={<CommandesPage />} />
+              <Route path="/commandes/new" element={<NewCommandePage />} />
+              <Route path="/commandes/:commandeId" element={<CommandeDetailPage />} />
               <Route path="/alertes" element={<AlertsPage />} />
               <Route path="/profil" element={<ProfilePage />} />
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
