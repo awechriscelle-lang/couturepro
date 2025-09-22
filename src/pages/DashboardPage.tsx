@@ -126,7 +126,7 @@ export const DashboardPage: React.FC = () => {
           />
           <StatCard
             title="Revenus (mois)"
-            value={`${stats.revenusMois.toLocaleString()}€`}
+            value={`${stats.revenusMois.toLocaleString()} FCFA`}
             icon={Euro}
             color="bg-purple-500"
           />

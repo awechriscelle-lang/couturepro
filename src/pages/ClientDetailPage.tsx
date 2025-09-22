@@ -216,7 +216,7 @@ export const ClientDetailPage: React.FC = () => {
                         }`}>
                           {commande.statut}
                         </span>
-                        <p className="text-sm font-medium mt-1">{commande.montantTotal}€</p>
+                        <p className="text-sm font-medium mt-1">{commande.montantTotal.toLocaleString()} FCFA</p>
                       </div>
                     </div>
                   </div>
