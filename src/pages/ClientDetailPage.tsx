@@ -101,13 +101,25 @@ export const ClientDetailPage: React.FC = () => {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-2 gap-3">
+          {/* Prendre mesures */}
           <button
-            onClick={() => setShowMesuresModal(true)}
+            onClick={() => navigate(`/clients/${client.id}/mesures/new`)}
             className="bg-green-600 text-white p-4 rounded-lg flex flex-col items-center space-y-2 hover:bg-green-700 transition-colors"
           >
             <Ruler className="w-6 h-6" />
-            <span className="text-sm font-medium">Mesures</span>
+            <span className="text-sm font-medium">Prendre mesures</span>
           </button>
+
+          {/* Voir mesures existantes */}
+          <button
+            onClick={() => setShowMesuresModal(true)}
+            className="bg-gray-600 text-white p-4 rounded-lg flex flex-col items-center space-y-2 hover:bg-gray-700 transition-colors"
+          >
+            <Ruler className="w-6 h-6" />
+            <span className="text-sm font-medium">Voir mesures</span>
+          </button>
+
+          {/* Créer commande */}
           <button
             onClick={() => navigate(`/commandes/new?clientId=${client.id}`)}
             className="bg-blue-600 text-white p-4 rounded-lg flex flex-col items-center space-y-2 hover:bg-blue-700 transition-colors"
@@ -154,7 +166,7 @@ export const ClientDetailPage: React.FC = () => {
                 ))}
                 {mesures.length > 2 && (
                   <button
-                    onClick={setShowMesuresModal}
+                    onClick={() => setShowMesuresModal(true)}
                     className="text-[#5082BE] text-sm hover:text-[#4070A0] transition-colors"
                   >
                     Voir toutes les mesures ({mesures.length})
