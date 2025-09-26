@@ -1,42 +1,64 @@
 import React from 'react';
-import { ArrowLeft, Menu } from 'lucide-react';
+import { ArrowLeft, Settings as SettingsIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   title: string;
   showBack?: boolean;
-  showMenu?: boolean;
-  onMenuClick?: () => void;
+  showSettings?: boolean;
+  logo?: string;
+  onSettingsClick?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ 
   title, 
   showBack = false, 
-  showMenu = false,
-  onMenuClick 
+  showSettings = false,
+  logo,
+  onSettingsClick 
 }) => {
   const navigate = useNavigate();
 
+  const handleSettingsClick = () => {
+    if (onSettingsClick) {
+      onSettingsClick();
+    } else {
+      navigate('/settings');
+    }
+  };
+
   return (
-    <header className="bg-[#5082BE] text-white px-4 py-4 flex items-center justify-between">
+    <header className="app-header">
       <div className="flex items-center gap-3">
         {showBack && (
           <button
             onClick={() => navigate(-1)}
-            className="p-1 rounded-full hover:bg-white/20 transition-colors"
+            className="p-2 rounded-full hover:bg-white/20 transition-colors focus-visible"
           >
             <ArrowLeft className="w-6 h-6" />
           </button>
         )}
-        <h1 className="text-xl font-semibold">{title}</h1>
+        
+        {logo && (
+          <img 
+            src={logo} 
+            alt="Logo" 
+            className="app-logo"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+            }}
+          />
+        )}
+        
+        <h1 className="text-xl font-bold">{title}</h1>
       </div>
       
-      {showMenu && (
+      {showSettings && (
         <button
-          onClick={onMenuClick}
-          className="p-1 rounded-full hover:bg-white/20 transition-colors"
+          onClick={handleSettingsClick}
+          className="p-2 rounded-full hover:bg-white/20 transition-colors focus-visible"
         >
-          <Menu className="w-6 h-6" />
+          <SettingsIcon className="w-6 h-6" />
         </button>
       )}
     </header>

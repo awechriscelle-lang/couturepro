@@ -1,24 +1,42 @@
 import React from 'react';
-import { DivideIcon as LucideIcon } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 
 interface StatCardProps {
   title: string;
   value: string | number;
   icon: LucideIcon;
   color: string;
+  trend?: string;
+  onClick?: () => void;
 }
 
-export const StatCard: React.FC<StatCardProps> = ({ title, value, icon: Icon, color }) => {
+export const StatCard: React.FC<StatCardProps> = ({ 
+  title, 
+  value, 
+  icon: Icon, 
+  color, 
+  trend,
+  onClick 
+}) => {
   return (
-    <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-gray-500 text-sm font-medium">{title}</p>
-          <p className="text-2xl font-bold text-gray-900">{value}</p>
+    <div 
+      className={`stat-card ${onClick ? 'cursor-pointer' : ''}`}
+      onClick={onClick}
+    >
+      <div className="flex items-center justify-between mb-2">
+        <div className={`w-10 h-10 ${color} rounded-full flex items-center justify-center`}>
+          <Icon className="w-5 h-5 text-white" />
         </div>
-        <div className={`w-12 h-12 ${color} rounded-full flex items-center justify-center`}>
-          <Icon className="w-6 h-6 text-white" />
-        </div>
+        {trend && (
+          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+            {trend}
+          </span>
+        )}
+      </div>
+      
+      <div>
+        <p className="text-gray-600 text-sm font-medium mb-1">{title}</p>
+        <p className="text-2xl font-bold text-gray-900">{value}</p>
       </div>
     </div>
   );
