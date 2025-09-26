@@ -50,6 +50,9 @@ export const DashboardPage: React.FC = () => {
       if (appSettings.couleurPrimaire) {
         document.documentElement.style.setProperty('--primary-color', appSettings.couleurPrimaire);
         document.documentElement.style.setProperty('--primary-hover', appSettings.couleurPrimaire + 'dd');
+      } else {
+        document.documentElement.style.setProperty('--primary-color', '#0A3764');
+        document.documentElement.style.setProperty('--primary-hover', '#0A3764dd');
       }
     } catch (error) {
       console.error('Error loading dashboard data:', error);
@@ -61,8 +64,8 @@ export const DashboardPage: React.FC = () => {
   const quickActions = [
     {
       title: "Ajouter client",
-      icon: Plus,
-      color: "bg-green-600",
+      icon: Users,
+      color: "bg-[var(--primary-color)]",
       onClick: () => navigate('/clients/new')
     },
     {
@@ -78,8 +81,8 @@ export const DashboardPage: React.FC = () => {
       onClick: () => navigate('/clients')
     },
     {
-      title: "Nouvelle commande",
-      icon: Plus,
+      title: "Nouvelle commande & Paiement",
+      icon: CreditCard,
       color: "bg-orange-600",
       onClick: () => navigate('/commandes/new')
     }
@@ -94,7 +97,7 @@ export const DashboardPage: React.FC = () => {
       trend: `${stats.clientsActifs} actifs`
     },
     {
-      title: "En cours",
+      title: "Commandes en cours",
       value: stats.commandesEnCours,
       icon: Clock,
       color: "bg-orange-500",
@@ -118,7 +121,7 @@ export const DashboardPage: React.FC = () => {
 
   const secondaryStats = [
     {
-      title: "Livrées",
+      title: "Commandes livrées",
       value: stats.commandesLivrees,
       icon: CheckCircle,
       color: "bg-emerald-500"
@@ -130,13 +133,13 @@ export const DashboardPage: React.FC = () => {
       color: stats.paiementsEnAttente > 0 ? "bg-red-500" : "bg-gray-400"
     },
     {
-      title: "Retouches",
+      title: "Retouches en cours",
       value: stats.retouchesEnCours,
       icon: Settings,
       color: stats.retouchesEnCours > 0 ? "bg-yellow-500" : "bg-gray-400"
     },
     {
-      title: "CA Année",
+      title: "CA Annuel",
       value: `${(stats.revenusAnnee / 1000).toFixed(0)}K`,
       icon: TrendingUp,
       color: "bg-indigo-500"
@@ -170,7 +173,7 @@ export const DashboardPage: React.FC = () => {
 
       <div className="p-4 space-y-6 fade-in">
         {/* Welcome Message */}
-        <div className="professional-card primary p-6">
+        <div className="border-2 border-[var(--primary-color)] rounded-xl shadow-md p-6 bg-white">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl font-bold text-gray-900 mb-1">
@@ -194,21 +197,25 @@ export const DashboardPage: React.FC = () => {
         </div>
 
         {/* Main Statistics */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {mainStats.map((stat, index) => (
-            <StatCard
-              key={index}
-              title={stat.title}
-              value={stat.value}
-              icon={stat.icon}
-              color={stat.color}
-              trend={stat.trend}
-              onClick={() => {
-                if (stat.title === 'Clients') navigate('/clients');
-                else if (stat.title === 'En cours') navigate('/commandes');
-                else if (stat.title === 'Alertes') navigate('/alertes');
-              }}
-            />
+            <div 
+              key={index} 
+              className="border-2 border-[var(--primary-color)] rounded-xl shadow-md bg-white hover:scale-[1.02] transition"
+            >
+              <StatCard
+                title={stat.title}
+                value={stat.value}
+                icon={stat.icon}
+                color={stat.color}
+                trend={stat.trend}
+                onClick={() => {
+                  if (stat.title.includes('Client')) navigate('/clients');
+                  else if (stat.title.includes('cours')) navigate('/commandes');
+                  else if (stat.title.includes('Alerte')) navigate('/alertes');
+                }}
+              />
+            </div>
           ))}
         </div>
 
@@ -217,7 +224,7 @@ export const DashboardPage: React.FC = () => {
           <h3 className="text-lg font-bold text-gray-900 mb-4">
             Choisissez votre opération
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {quickActions.map((action, index) => (
               <DashboardCard
                 key={index}
@@ -235,26 +242,27 @@ export const DashboardPage: React.FC = () => {
           <h3 className="text-lg font-bold text-gray-900 mb-4">
             Aperçu détaillé
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {secondaryStats.map((stat, index) => (
-              <div key={index} className="stat-card">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-gray-600 text-sm font-medium">{stat.title}</p>
-                    <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                  </div>
-                  <div className={`w-12 h-12 ${stat.color} rounded-full flex items-center justify-center`}>
-                    <stat.icon className="w-6 h-6 text-white" />
-                  </div>
+              <div 
+                key={index} 
+                className="border-2 border-[var(--primary-color)] rounded-xl shadow-md bg-white p-4 flex items-center justify-between hover:scale-[1.02] transition"
+              >
+                <div>
+                  <p className="text-gray-600 text-sm font-medium">{stat.title}</p>
+                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                </div>
+                <div className={`w-12 h-12 ${stat.color} rounded-full flex items-center justify-center`}>
+                  <stat.icon className="w-6 h-6 text-white" />
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Recent Activity Preview */}
+        {/* Alerts */}
         {stats.alertesCount > 0 && (
-          <div className="professional-card warning p-4">
+          <div className="border-2 border-red-500 rounded-xl shadow-md bg-red-50 p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <AlertTriangle className="w-6 h-6 text-yellow-600" />
