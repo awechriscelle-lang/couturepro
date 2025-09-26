@@ -6,8 +6,6 @@ import {
 } from 'lucide-react';
 import { Header } from '../components/Header';
 import { BottomNavigation } from '../components/BottomNavigation';
-import { DashboardCard } from '../components/DashboardCard';
-import { StatCard } from '../components/StatCard';
 import { dbService } from '../services/database';
 import { DashboardStats, Settings as SettingsType } from '../types';
 
@@ -30,8 +28,6 @@ export const DashboardPage: React.FC = () => {
 
   useEffect(() => {
     loadDashboardData();
-    
-    // Auto-refresh every 30 seconds
     const interval = setInterval(loadDashboardData, 30000);
     return () => clearInterval(interval);
   }, []);
@@ -42,17 +38,12 @@ export const DashboardPage: React.FC = () => {
         dbService.getDashboardStats(),
         dbService.getSettings()
       ]);
-      
       setStats(dashboardStats);
       setSettings(appSettings);
-      
-      // Apply theme
+
       if (appSettings.couleurPrimaire) {
         document.documentElement.style.setProperty('--primary-color', appSettings.couleurPrimaire);
         document.documentElement.style.setProperty('--primary-hover', appSettings.couleurPrimaire + 'dd');
-      } else {
-        document.documentElement.style.setProperty('--primary-color', '#0A3764');
-        document.documentElement.style.setProperty('--primary-hover', '#0A3764dd');
       }
     } catch (error) {
       console.error('Error loading dashboard data:', error);
@@ -65,7 +56,7 @@ export const DashboardPage: React.FC = () => {
     {
       title: "Ajouter client",
       icon: Users,
-      color: "bg-[var(--primary-color)]",
+      color: "bg-blue-600",
       onClick: () => navigate('/clients/new')
     },
     {
@@ -77,7 +68,7 @@ export const DashboardPage: React.FC = () => {
     {
       title: "Clients",
       icon: Users,
-      color: "bg-blue-600",
+      color: "bg-indigo-600",
       onClick: () => navigate('/clients')
     },
     {
@@ -97,7 +88,7 @@ export const DashboardPage: React.FC = () => {
       trend: `${stats.clientsActifs} actifs`
     },
     {
-      title: "Commandes en cours",
+      title: "En cours",
       value: stats.commandesEnCours,
       icon: Clock,
       color: "bg-orange-500",
@@ -121,7 +112,7 @@ export const DashboardPage: React.FC = () => {
 
   const secondaryStats = [
     {
-      title: "Commandes livrées",
+      title: "Livrées",
       value: stats.commandesLivrees,
       icon: CheckCircle,
       color: "bg-emerald-500"
@@ -133,13 +124,13 @@ export const DashboardPage: React.FC = () => {
       color: stats.paiementsEnAttente > 0 ? "bg-red-500" : "bg-gray-400"
     },
     {
-      title: "Retouches en cours",
+      title: "Retouches",
       value: stats.retouchesEnCours,
       icon: Settings,
       color: stats.retouchesEnCours > 0 ? "bg-yellow-500" : "bg-gray-400"
     },
     {
-      title: "CA Annuel",
+      title: "CA Année",
       value: `${(stats.revenusAnnee / 1000).toFixed(0)}K`,
       icon: TrendingUp,
       color: "bg-indigo-500"
@@ -151,11 +142,10 @@ export const DashboardPage: React.FC = () => {
       <div className="min-h-screen bg-gray-50 pb-20">
         <Header title="COUTUPRO" />
         <div className="p-4 space-y-6">
-          {/* Loading skeletons */}
-          <div className="bg-white rounded-xl p-6 loading-skeleton h-24"></div>
+          <div className="bg-white rounded-2xl p-6 shadow-md h-24 animate-pulse"></div>
           <div className="grid grid-cols-2 gap-4">
             {[1, 2, 3, 4].map(i => (
-              <div key={i} className="bg-white rounded-xl p-4 loading-skeleton h-24"></div>
+              <div key={i} className="bg-white rounded-2xl p-4 shadow-md h-24 animate-pulse"></div>
             ))}
           </div>
         </div>
@@ -171,9 +161,9 @@ export const DashboardPage: React.FC = () => {
         showSettings
       />
 
-      <div className="p-4 space-y-6 fade-in">
+      <div className="p-4 space-y-8 fade-in">
         {/* Welcome Message */}
-        <div className="border-2 border-[var(--primary-color)] rounded-xl shadow-md p-6 bg-white">
+        <div className="bg-white rounded-2xl shadow-md p-6">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl font-bold text-gray-900 mb-1">
@@ -197,24 +187,17 @@ export const DashboardPage: React.FC = () => {
         </div>
 
         {/* Main Statistics */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           {mainStats.map((stat, index) => (
-            <div 
-              key={index} 
-              className="border-2 border-[var(--primary-color)] rounded-xl shadow-md bg-white hover:scale-[1.02] transition"
-            >
-              <StatCard
-                title={stat.title}
-                value={stat.value}
-                icon={stat.icon}
-                color={stat.color}
-                trend={stat.trend}
-                onClick={() => {
-                  if (stat.title.includes('Client')) navigate('/clients');
-                  else if (stat.title.includes('cours')) navigate('/commandes');
-                  else if (stat.title.includes('Alerte')) navigate('/alertes');
-                }}
-              />
+            <div key={index} className="bg-white rounded-2xl p-4 shadow-sm flex items-center space-x-4">
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center ${stat.color}`}>
+                <stat.icon className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">{stat.title}</p>
+                <p className="text-xl font-bold text-gray-900">{stat.value}</p>
+                {stat.trend && <p className="text-xs text-gray-400">{stat.trend}</p>}
+              </div>
             </div>
           ))}
         </div>
@@ -222,17 +205,20 @@ export const DashboardPage: React.FC = () => {
         {/* Quick Actions */}
         <div>
           <h3 className="text-lg font-bold text-gray-900 mb-4">
-            Choisissez votre opération
+            Actions rapides
           </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-4 gap-6 text-center">
             {quickActions.map((action, index) => (
-              <DashboardCard
+              <button
                 key={index}
-                title={action.title}
-                icon={action.icon}
-                bgColor={action.color}
                 onClick={action.onClick}
-              />
+                className="flex flex-col items-center space-y-2 focus:outline-none"
+              >
+                <div className={`w-14 h-14 rounded-full flex items-center justify-center ${action.color} shadow-md`}>
+                  <action.icon className="w-6 h-6 text-white" />
+                </div>
+                <span className="text-xs font-medium text-gray-700">{action.title}</span>
+              </button>
             ))}
           </div>
         </div>
@@ -242,27 +228,24 @@ export const DashboardPage: React.FC = () => {
           <h3 className="text-lg font-bold text-gray-900 mb-4">
             Aperçu détaillé
           </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             {secondaryStats.map((stat, index) => (
-              <div 
-                key={index} 
-                className="border-2 border-[var(--primary-color)] rounded-xl shadow-md bg-white p-4 flex items-center justify-between hover:scale-[1.02] transition"
-              >
-                <div>
-                  <p className="text-gray-600 text-sm font-medium">{stat.title}</p>
-                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                </div>
-                <div className={`w-12 h-12 ${stat.color} rounded-full flex items-center justify-center`}>
+              <div key={index} className="bg-white rounded-2xl p-4 shadow-sm flex items-center space-x-4">
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${stat.color}`}>
                   <stat.icon className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">{stat.title}</p>
+                  <p className="text-lg font-bold text-gray-900">{stat.value}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Alerts */}
+        {/* Alerts Section */}
         {stats.alertesCount > 0 && (
-          <div className="border-2 border-red-500 rounded-xl shadow-md bg-red-50 p-4">
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-xl shadow-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <AlertTriangle className="w-6 h-6 text-yellow-600" />
@@ -277,7 +260,7 @@ export const DashboardPage: React.FC = () => {
               </div>
               <button
                 onClick={() => navigate('/alertes')}
-                className="btn-primary text-sm px-4 py-2"
+                className="text-sm font-medium text-yellow-700 underline"
               >
                 Voir
               </button>
