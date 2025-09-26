@@ -1,5 +1,5 @@
 import React from 'react';
-import { Video as LucideIcon } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 
 interface DashboardCardProps {
   title: string;
@@ -19,7 +19,17 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`dashboard-card ${bgColor} ${textColor} h-28 flex flex-col items-center justify-center text-center space-y-3`}
+      className={`
+        ${bgColor} ${textColor}
+        h-28 w-full
+        flex flex-col items-center justify-center text-center
+        space-y-3
+        rounded-xl
+        border-2 border-[#0A3764]
+        shadow-md
+        hover:scale-105 hover:shadow-lg
+        transition-transform duration-200 ease-in-out
+      `}
     >
       <Icon className="w-8 h-8" />
       <span className="font-semibold text-sm leading-tight">{title}</span>
