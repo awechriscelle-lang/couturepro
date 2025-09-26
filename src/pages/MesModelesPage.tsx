@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Search, Edit, Trash2, Shirt, Tag } from 'lucide-react';
+import { Plus, Search, CreditCard as Edit, Trash2, Shirt, Tag } from 'lucide-react';
 import { Header } from '../components/Header';
 import { BottomNavigation } from '../components/BottomNavigation';
 import { Modal } from '../components/Modal';
